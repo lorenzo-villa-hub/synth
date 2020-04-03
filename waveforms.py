@@ -13,12 +13,16 @@ class Waveform:
         self.sampling_rate = sampling_rate
         self.time_array = np.arange(self.sampling_rate*self.duration)
         
-    def plot(self,waveform):
+    def plot(self,waveform,**kwargs):
         
         x = self.time_array
         y = waveform
-        plt.plot(x,y)
+        plt.plot(x,y,**kwargs)
+        
+        plt.xticks([])
+        plt.yticks([])
         plt.xlim(0,200)
+        plt.legend()
         
         return plt
         

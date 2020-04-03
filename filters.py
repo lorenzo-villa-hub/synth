@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
 """
 Created on Fri Jan  3 17:38:54 2020
 
@@ -10,14 +9,20 @@ from scipy import signal
 
 class Filters:
     
-    def lowpass(wave,cutoff,sampling_rate = 44100):
+    def __init__(self,waveform,cutoff,sampling_rate=44100): #remember to add resonance
         
-        nyq = 0.5 * sampling_rate
+        self.waveform = waveform
+        self.cutoff = cutoff
+        self.sampling_rate = sampling_rate
+    
+    def lowpass(self):
+        
+        nyq = 0.5 * self.sampling_rate
         N  = 6    # Filter order
-        fc = cutoff / nyq # Cutoff frequency normal
+        fc = self.cutoff / nyq # Cutoff frequency normal
         b, a = signal.butter(N, fc)
         
         #Apply the filter
-        wave = signal.filtfilt(b,a,wave)
+        waveform = signal.filtfilt(b,a,self.waveform)
         
-        return wave
+        return waveform

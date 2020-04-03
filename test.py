@@ -6,6 +6,7 @@ This is a temporary script file.
 
 """
 from synth.waveforms import Waveform, Saw, Supersaw
+from synth.filters import Filters
 import numpy as np
 import sounddevice as sd
 import time
@@ -16,9 +17,14 @@ sample_rate = 44100
 
 osc = Supersaw(frequency,1,1)
 waveform = osc.get_waveform(n_waves=5,detune=0.01,blend=0.25)
-osc.plot(waveform)
+osc.plot(waveform,label='raw')
+
+filters = Filters(waveform,cutoff=1000)
+waveform = filters.lowpass()
+osc.plot(waveform,label='filtered')
 
 sd.play(waveform,samplerate=sample_rate)
+
 
 
 
