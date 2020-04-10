@@ -5,26 +5,28 @@ Spyder Editor
 This is a temporary script file.
 
 """
-from synth.waveforms import Waveform, Saw, Supersaw
-from synth.filters import Filters
+from vibra.waveforms import Waveform, Saw, Supersaw, Sine
+from vibra.filters import Lowpass, Bandpass, Highpass
 import numpy as np
 import sounddevice as sd
 import time
+from scipy import signal
+import matplotlib.pyplot as plt
 
 
-frequency = 440 
-sample_rate = 44100
+frequency = 200
+samplerate = 44100
 
-osc = Supersaw(frequency,1,1)
-waveform = osc.get_waveform(n_waves=5,detune=0.01,blend=0.25)
+osc = Saw(frequency,1,1)
+waveform = osc.get_waveform()
 osc.plot(waveform,label='raw')
 
-filters = Filters(waveform,cutoff=1000)
-waveform = filters.lowpass()
+filt = Highpass(cutoff=500,slope='24')
+waveform = filt.apply_filter(waveform)
+filt.plot()
 osc.plot(waveform,label='filtered')
 
-sd.play(waveform,samplerate=sample_rate)
-
+sd.play(waveform,samplerate=samplerate)
 
 
 

@@ -14,7 +14,7 @@ class Waveform:
         self.time_array = np.arange(self.sampling_rate*self.duration)
         
     def plot(self,waveform,**kwargs):
-        
+        plt.figure()
         x = self.time_array
         y = waveform
         plt.plot(x,y,**kwargs)
@@ -27,8 +27,7 @@ class Waveform:
         return plt
         
               
-
-
+    
 class Noise(Waveform):
 
     def get_waveform(self):
